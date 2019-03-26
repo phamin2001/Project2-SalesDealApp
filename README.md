@@ -9,3 +9,5 @@
 7. User can see deals based on her favorite brands/store collections. 
 
 ## Wireframes:
+
+![IMG_3150](https://user-images.githubusercontent.com/26368039/55023039-9181dc00-4fc1-11e9-9c71-fd54bb009ac0.jpg)
