@@ -9,10 +9,21 @@
 7. User can see deals based on her favorite brands/store collections. 
 
 ## Model:
+User:
+```
+    name:       {type: String, required: true},
+    lastname:   {type: String},
+    username:   {type: String, required: true, unique: true},
+    password:   {type: String, required: true, unique: true},
+    brands:     [Brand.schema]
+```
 
-
-
-
+Brands:
+```
+    name:      {type: String, required: true},
+    category:  {type: String},
+    store:     {type: String}
+```
 
 ## Wireframes:
 
