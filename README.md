@@ -23,7 +23,13 @@ Brands:
 ```
     name:      {type: String, required: true},
     category:  {type: String},
-    store:     {type: String}
+    store:     {type: String},
+    deal:      [Deal.schema]
+```
+
+Deal:
+```
+    percent:  {type: Number, required: true}
 ```
 
 ## Wireframes:
