@@ -22,15 +22,14 @@ User:
 Brands:
 ```
     name:      {type: String, required: true},
-    category:  {type: String},
-    deals:     [Deal.schema]
+    category:  {type: String}
 ```
 
 Deal:
 ```
     percent:    {type: Number, required: true},
     category:   {type: String, required: true},
-    brands:     [Brand.schema]
+    brands     :    [{type: mongoose.Schema.Types.ObjectId, ref: 'Brand'}]
 ```
 
 ## Wireframes:
