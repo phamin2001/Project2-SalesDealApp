@@ -1,7 +1,7 @@
 {
   "name": "project2-salesdealapp",
   "version": "1.0.0",
-  "description": "",
+  "description": "Sales Deal App",
   "main": "server.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
