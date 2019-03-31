@@ -44,10 +44,10 @@ app.use('/users/:id/brands', (req, res, next) => {
     req.userId = req.params.id;
     next();
 }, brandsController);
-app.use('/brands/:id/deals', (req, res, next) => {
-    req.brandId = req.param.id;
-    next();
-}, dealsController);
+// app.use('/brands/:id/deals', (req, res, next) => {
+//     req.brandId = req.param.id;
+//     next();
+// }, dealsController);
 
 app.get('/', (req, res) => {
     res.render('index.ejs', {

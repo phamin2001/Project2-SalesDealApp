@@ -3,6 +3,9 @@ main {
     min-height: calc(75vh - 10px);
 }
 
+#back-home {
+    border-top: '';
+}
 
 footer {
     position: relative;

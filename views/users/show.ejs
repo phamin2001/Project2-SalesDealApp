@@ -11,13 +11,25 @@
         <main>
             <h1><%= user.name %> <%= user.lastname %></h1><br/>
             <h2>Your Brands: </h2><br/>
-            <ul>
-                <% for(let i = 0; i < user.brands.length; i++) { %>
-                    <li><a href="/users/<%= user._id %>/brands/<%= user.brands[i]._id %>"><%= user.brands[i].name %></a></li>
-                <% } %><br/>
-            </ul>
+            <nav id="user-brands">
+                <ul>
+                    <% for(let i = 0; i < user.brands.length; i++) { %>
+                        <li><a href="/users/<%= user._id %>/brands/<%= user.brands[i]._id %>"><%= user.brands[i].name %></a></li>
+                    <% } %><br/>
+                </ul>
+                <div>
+                    <% if(user._id.toString() === sessionId.toString()) { %>
+                        <h3><a href="/users/<%= user._id %>/brands/new"><button>Add Brand</button></a></h3>
+                       <% } %>
+                </div>
+            </nav>
 
-            
+            <div id="edit-profile">
+                <% if(user._id.toString() === sessionId.toString()) { %>
+                    <h3><a href="/users/<%= user._id %>/edit"><button>Edit Profile</button></a></h3>
+                    <h3><form action="/users/<%= user._id %>?_method=DELETE" method="POST"><button>Delete Profile</button></form></h3>
+                <% } %>
+            </div>
         </main>
         <footer>
             <% include ../partials/footer %>
