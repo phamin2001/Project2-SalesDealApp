@@ -50,6 +50,15 @@ router.get('/create', async (req, res) => {
 });
 
 // logout
+router.get('/logout', (req, res) => {
+   req.session.destroy((err) => {
+       if(err) {
+           res.send(err);
+       }
+       res.redirect('/');
+   })
+});
+
 
 
 module.exports = router;

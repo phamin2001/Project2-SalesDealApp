@@ -1,16 +1,33 @@
+header {
+    text-align  :  center;
+}
+
+nav li {
+    display  :  inline-block;
+}
+
 main {
-    text-align: center;
-    min-height: calc(75vh - 10px);
+    text-align : center;
+    min-height : calc(75vh - 10px);
+}
+
+main li {
+    list-style-type  :  none;
+}
+
+main ul {
+    text-align        :  center;
+    justify-content   :   left;
 }
 
 #back-home {
-    border-top: '';
+    border-top : '';
 }
 
 footer {
-    position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 10px;
+    position  : relative;
+    bottom    : 0;
+    left      : 0;
+    right     : 0;
+    height    : 10px;
 }

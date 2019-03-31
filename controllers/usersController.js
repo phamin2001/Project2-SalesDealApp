@@ -3,6 +3,7 @@ const router    =   express.Router();
 const User      =   require('../models/user');
 const bcrypt    =   require('bcryptjs');
 
+// create
 router.post('/create', async (req, res) => {
     const password         =   req.body.password;
     const hashedPassword   =   bcrypt.hashSync(password, bcrypt.genSaltSync(10));
@@ -31,5 +32,20 @@ router.post('/create', async (req, res) => {
         res.send(err);
     }
 });
+
+// show
+router.get('/:id', async (req, res) => {
+    try {
+        const foundUser = await User.findById(req.params.id);
+        res.render('users/show.ejs', {
+            user       : foundUser,
+            sessionId  : req.params.id
+        });
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+});
+
 
 module.exports = router;
