@@ -39,4 +39,17 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// register
+router.get('/create', async (req, res) => {
+    try {
+        res.render('auths/create.ejs');
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+});
+
+// logout
+
+
 module.exports = router;

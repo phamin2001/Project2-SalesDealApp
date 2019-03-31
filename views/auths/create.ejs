@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include ../partials/headmeta %>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <title>Create</title>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="/"><button>Back To Main Page</button></a>
+            </nav>
+        </header>
+        <main>
+            <h1>Create Your Profiel</h1>
+            <form action="/users/create" method="POST" id="create-form">
+                <input type="text" name="name" placeholder="name"><br/>
+                <input type="text" name="lastname" placeholder="lastname"><br/>
+                <input type="text" name="username" placeholder="username"><br/>
+                <input type="password" name="password" placeholder="password"><br/>
+                <input type="Submit"> 
+            </form>
+        </main>
+        <footer>
+            <% include ../partials/footer %>
+        </footer>
+        <script src="/js/createValidation"></script>    
+    </body>
+</html>

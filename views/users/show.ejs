@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include ../partials/headmeta %>
+        <title>Welcome <%= user.name %></title>
+    </head>
+    <body>
+        <header>
+            <% include ../partials/header %>
+        </header>
+        <main>
+            <h1><%= user.name %> <%= user.lastname %></h1><br/>
+            <h2>Your Brands: </h2><br/>
+            <ul>
+                <% for(let i = 0; i < user.brands.length; i++) { %>
+                    <li><a href="/users/<%= user._id %>/brands/<%= user.brands[i]._id %>"><%= user.brands[i].name %></a></li>
+                <% } %><br/>
+            </ul>
+
+            
+        </main>
+        <footer>
+            <% include ../partials/footer %>
+        </footer>
+    </body>
+</html>
