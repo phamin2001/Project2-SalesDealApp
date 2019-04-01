@@ -42,7 +42,9 @@ router.post('/login', async (req, res) => {
 // register
 router.get('/create', async (req, res) => {
     try {
-        res.render('auths/create.ejs');
+        res.render('auths/create.ejs', {
+            message: req.session.message
+        });
     } catch (err) {
         console.log(err);
         res.send(err);

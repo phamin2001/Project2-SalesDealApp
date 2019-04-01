@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include ../partials/headmeta %>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <title>Edit Your Profile</title>
+    </head>
+    <body>
+        <header>
+           <% include ../partials/header %>
+        </header>
+        <main>
+            <%= message %>
+            <h1>Edit Your Profile:</h1>
+            <form action="/users/<%= user._id %>?_method=put" method="POST" id="editUser-form">
+                Name:        <input type="text" name="name" placeholder="<%= user.name %>"><br/>
+                Last Name:   <input type="text" name="lastname" placeholder="<%= user.lastname %>"><br/>
+                Username:    <input type="text" name="username" placeholder="<%= user.username %>"><br/>
+                Password:    <input type="password" name="password" placeholder="password"><br/><br/>
+                             <input type="Submit">
+            </form>
+        </main>
+        <footer>
+            <% include ../partials/footer %>
+        </footer>
+        <script src="/js/editValidation"></script>
+    </body>
+</html>

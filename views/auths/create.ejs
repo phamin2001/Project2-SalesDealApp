@@ -7,15 +7,16 @@
     </head>
     <body>
         <header>
+            <%= message %>
         </header>
         <main>
-            <h1>Create Your Profiel</h1>
-            <form action="/users/create" method="POST" id="create-form">
-                <input type="text" name="name" placeholder="name"><br/>
-                <input type="text" name="lastname" placeholder="lastname"><br/>
-                <input type="text" name="username" placeholder="username"><br/>
-                <input type="password" name="password" placeholder="password"><br/><br/>
-                <input type="Submit"> 
+            <h1>Create Your Profile</h1>
+            <form action="/users/create" method="POST" id="createUser-form">
+                Name:      <input type="text" name="name" placeholder="name"><br/>
+                Last Name: <input type="text" name="lastname" placeholder="lastname"><br/>
+                Username:  <input type="text" name="username" placeholder="username"><br/>
+                Password:  <input type="password" name="password" placeholder="password"><br/><br/>
+                           <input type="Submit"> 
             </form> <br/>
             <nav id="back-home"><br/>
                 <a href="/"><button>Back To Main Page</button></a>
