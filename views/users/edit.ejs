@@ -11,7 +11,7 @@
         </header>
         <main>
             <% if(editMessage) { %>
-                <%= localMessage %>
+                <%= editMessage %>
             <% } %>
             <h1>Edit Your Profile:</h1>
             <form action="/users/<%= user._id %>?_method=put" method="POST" id="editUser-form">
@@ -25,6 +25,6 @@
         <footer>
             <% include ../partials/footer %>
         </footer>
-        <script src="/js/editValidation"></script>
+        <script src="/js/editValidation.js"></script>
     </body>
 </html>

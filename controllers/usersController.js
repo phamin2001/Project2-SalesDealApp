@@ -50,16 +50,20 @@ router.get('/:id', async (req, res) => {
 
 // edit
 router.get('/:id/edit', async (req, res) => {
-    try {
-        const foundUser = await User.findById(req.params.id);
-        res.render('users/edit.ejs', {
-            user           :  foundUser,
-            sessionId      :  req.params.id,
-            editMessage   :  req.flash('updateError')
-        })
-    } catch (err) {
-        console.log(err);
-        res.send(err);
+    if(req.session.userId === req.params.id) {
+        try {
+            const foundUser = await User.findById(req.params.id);
+            res.render('users/edit.ejs', {
+                user           :  foundUser,
+                sessionId      :  req.params.id,
+                editMessage   :  req.flash('updateError')
+            })
+        } catch (err) {
+            console.log(err);
+            res.send(err);
+        }
+    } else {
+        res.send('Not a right person to do it.');
     }
 });
 
@@ -81,6 +85,21 @@ router.put('/:id', async (req, res) => {
     } catch (err) {
         console.log(err);
         res.send(err);
+    }
+});
+
+//delete
+router.delete('/:id', async (req, res) => {
+    if(req.session.userId === req.params.id) {
+        try {
+            await User.findByIdAndDelete(req.params.id)
+            res.redirect('/');
+        } catch (err) {
+            console.log(err);
+            res.send(err);
+        }
+    } else {
+        res.send('Not a right person to do it.');
     }
 });
 

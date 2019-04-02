@@ -41,9 +41,6 @@ app.use('/auths', authsController);
 app.use('/brands', brandsController);
 app.use('/deals', dealsController);
 app.use('/users', usersController);
-// app.use(session({
-//     message:''
-// }));
 
 app.use('/users/:id/brands', (req, res, next) => {
     req.userId = req.params.id;
