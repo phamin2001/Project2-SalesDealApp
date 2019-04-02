@@ -7,7 +7,9 @@
     </head>
     <body>
         <header>
-            <%= message %>
+            <% if(createMessage) { %>
+                <%= createMessage %>
+            <% } %>
         </header>
         <main>
             <h1>Create Your Profile</h1>

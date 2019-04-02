@@ -4,6 +4,7 @@ const bodyParser       =   require('body-parser');
 const session          =   require('express-session');
 const morgan           =   require('morgan');
 const methodOverride   =   require('method-override');
+const flash            =   require('connect-flash');
 
 require('dotenv').config();
 require('./db/db');
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(morgan('short'));
 app.use(methodOverride('_method'));
 app.use(express.static('public'));
+app.use(flash());
 
 const authsController   =  require('./controllers/authsController');
 const brandsController  =  require('./controllers/brandsController');
@@ -39,22 +41,20 @@ app.use('/auths', authsController);
 app.use('/brands', brandsController);
 app.use('/deals', dealsController);
 app.use('/users', usersController);
-app.use(session({
-    message:''
-}));
+// app.use(session({
+//     message:''
+// }));
 
 app.use('/users/:id/brands', (req, res, next) => {
     req.userId = req.params.id;
     next();
 }, brandsController);
-// app.use('/brands/:id/deals', (req, res, next) => {
-//     req.brandId = req.param.id;
-//     next();
-// }, dealsController);
+
 
 app.get('/', (req, res) => {
     res.render('index.ejs', {
-        message: req.session.message
+        // message: req.session.message
+        message : req.flash('loginError')
     });
 });
 

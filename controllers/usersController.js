@@ -24,7 +24,8 @@ router.post('/create', async (req, res) => {
             res.redirect(`/users/${createdUser._id}`);
         } else {
             console.log('User Already Exists, Try Again.');
-            req.session.message = 'User Already Exists, Try Again.';
+            // req.session.message = 'User Already Exists, Try Again.';
+            req.flash('createError', 'User Already Exists, Try Again.');
             res.redirect('/auths/create');
         }
     } catch (err) {
@@ -52,9 +53,9 @@ router.get('/:id/edit', async (req, res) => {
     try {
         const foundUser = await User.findById(req.params.id);
         res.render('users/edit.ejs', {
-            user       :  foundUser,
-            sessionId  :  req.params.id,
-            message    : ''
+            user           :  foundUser,
+            sessionId      :  req.params.id,
+            editMessage   :  req.flash('updateError')
         })
     } catch (err) {
         console.log(err);
@@ -73,14 +74,10 @@ router.put('/:id', async (req, res) => {
             res.redirect(`/users/${req.params.id}`);
         } else {
             console.log('Username already Exists!');
-            req.session.message = 'Username already exists.';
-            // res.redirect(`/users/${req.params.id}/edit`);
-            res.render('user/edit.ejs', {
-                user        :   currentUser,
-                sessionId   :   req.params.id,
-                message     :   req.session.message
-            })
-        }    
+            // req.session.message = 'Username already exists.';
+            req.flash('updateError', 'Username already exists.');
+            res.redirect(`/users/${req.params.id}/edit`);
+        }
     } catch (err) {
         console.log(err);
         res.send(err);

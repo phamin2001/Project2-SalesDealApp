@@ -26,11 +26,13 @@ router.post('/login', async (req, res) => {
                 res.redirect(`/users/${foundUser._id}`);
             } else {
                 console.log('Password is wrong');
-                req.session.message = 'Password is wrong';
+                // req.session.message = 'Password is wrong';
+                req.flash('loginError', 'Password is wrong');
                 res.redirect('/');
             }
         } else {
-            req.session.message = 'User not found';
+            // req.session.message = 'User not found';
+            req.flash('loginError', 'User not found');
             res.redirect('/');
         }
     } catch (err) {
@@ -43,7 +45,7 @@ router.post('/login', async (req, res) => {
 router.get('/create', async (req, res) => {
     try {
         res.render('auths/create.ejs', {
-            message: req.session.message
+            createMessage: req.flash('createError')
         });
     } catch (err) {
         console.log(err);

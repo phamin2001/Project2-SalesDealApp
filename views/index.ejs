@@ -8,7 +8,9 @@
         <header>
             <h1>Welcome to Your Sales Deal</h1>
             <nav>
-                <%= message %>
+                <% if(message) { %>
+                    <%= message %>
+                <% } %>
                 <ul>
                     <li><a href="/auths/login">Login</a></li>
                     <li><a href="/auths/create">Create Accoint</a></li>
