@@ -41,7 +41,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// register
+// create
 router.get('/create', async (req, res) => {
     try {
         res.render('auths/create.ejs', {

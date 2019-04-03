@@ -2,7 +2,6 @@
 <html lang="en">
     <head>
         <% include ../partials/headmeta %>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <title>Login</title>
     </head>
     <body>
@@ -16,12 +15,11 @@
             <form action="/auths/login" method="POST" id="login-form">
                 <input type="text" name="username" placeholder="username"><br/>
                 <input type="password" name="password" placeholder="password"><br/>
-                <input type="Submit">
+                <input type="submit">
             </form>
         </main>
         <footer>
             <% include ../partials/footer %>
         </footer>
-        <script src="/js/loginValidation.js"></script>
     </body>
 </html>

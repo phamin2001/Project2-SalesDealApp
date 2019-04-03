@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <% include ../partials/headmeta%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <title>New Brand</title>
+    </head>
+    <body>
+        <header>
+            <% include ../partials/header.ejs %>
+        </header>
+        <main>
+            <h1>Add Brands To Your Profile</h1>
+
+            <% if(newBrandMessage) { %>
+                    <%= newBrandMessage %>
+            <% } %>
+
+            <form action="/brands" method="POST" id="newBrand-form">
+                Name:      <input type="text" name="name" placeholder="name"><br/>
+                Category:  <input type="text" name="category" placeholder="category"><br/>
+                           <input type="submit"><br/>
+            </form>
+            <h2>Or Select From List</h2>
+            <select>
+                <option value="Select">Select</option>
+                <% for(let i = 0; i < brandsTitles.length; i++) { %>
+                    <option value="<%= brandsTitles[i].name %>" label="<%= brandsTitles[i].category %>"><%= brandsTitles[i].name %></option>
+                <% } %>
+            </select>
+        </main>
+        <footer>
+            <% include ../partials/footer %>
+        </footer>
+        <script src="/js/newBrandValidation.js"></script>
+    </body>
+</html>

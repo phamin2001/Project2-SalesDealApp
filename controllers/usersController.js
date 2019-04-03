@@ -25,7 +25,7 @@ router.post('/create', async (req, res) => {
         } else {
             console.log('User Already Exists, Try Again.');
             // req.session.message = 'User Already Exists, Try Again.';
-            req.flash('createError', 'User Already Exists, Try Again.');
+            req.flash('createMessage', 'User Already Exists, Try Again.');
             res.redirect('/auths/create');
         }
     } catch (err) {
@@ -50,20 +50,21 @@ router.get('/:id', async (req, res) => {
 
 // edit
 router.get('/:id/edit', async (req, res) => {
-    if(req.session.userId === req.params.id) {
+
+    if(req.session.userId == req.params.id) {
         try {
             const foundUser = await User.findById(req.params.id);
             res.render('users/edit.ejs', {
                 user           :  foundUser,
-                sessionId      :  req.params.id,
-                editMessage   :  req.flash('updateError')
+                sessionId      :  req.session.userId,
+                editMessage    :  req.flash('updateError')
             })
         } catch (err) {
             console.log(err);
             res.send(err);
         }
     } else {
-        res.send('Not a right person to do it.');
+        res.send('Not a right person to do it');
     }
 });
 
@@ -90,7 +91,7 @@ router.put('/:id', async (req, res) => {
 
 //delete
 router.delete('/:id', async (req, res) => {
-    if(req.session.userId === req.params.id) {
+    if(req.session.userId == req.params.id) {
         try {
             await User.findByIdAndDelete(req.params.id)
             res.redirect('/');

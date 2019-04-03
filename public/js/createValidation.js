@@ -45,5 +45,4 @@ $('#createUser-form').submit((e) => {
         $('.createError').append((errors.username ? errors.username + '<br>' : '') , (errors.password ? errors.password + '<br>' : ''));
         console.log(err);
     }
-
 })
