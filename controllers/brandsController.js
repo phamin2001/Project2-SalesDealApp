@@ -56,10 +56,10 @@ router.post('/', async(req, res) => {
         const existBrand     =  await Brande.findOne({'name': brandDbEntry.name});
         if(!existBrand) {
             const createBrand  = await Brande.create(brandDbEntry);
-            // add new brand to user brand
-            // redirect to user profile
-
-
+            const foundUser    = await User.findById(req.userId);
+            foundUser.brands.push(createBrand);
+            await foundUser.save();
+            res.redirect(`/users/${req.userId}`);
         } else {
             console.log('This brand already exists. Create another one or Choose from and options');
             req.flash('newBrandMessage', 'Brand Alredy Exist, Try Again');
