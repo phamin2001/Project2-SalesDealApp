@@ -48,13 +48,31 @@ router.get('/new', async (req, res) => {
 
 // create
 router.post('/', async(req, res) => {
+    // console.log(req.body.brandName, 'brandName');
+    // check if selected brand OR created brand
+    // has already in the user.Brands array
+
     const brandDbEntry       =  {};
-    brandDbEntry.namme       =  req.params.name;
-    brandDbEntry.category    =  rea.params.category;
 
     try {
+        if(req.body.brandName !== "Select") {
+            brandDbEntry.name         = req.body.brandName;
+            const foundBrand          = await Brande.findOne({'name': brandDbEntry.name});
+            if(foundBrand) {
+                brandDbEntry.category = foundBrand.category;
+            } else {
+                const brandTitle  = brandsTitles.find( brand => brand.name === brandDbEntry.name);
+                brandDbEntry.category = brandTitle.category;
+            }
+        } else {
+            brandDbEntry.name        =  req.body.name;
+            brandDbEntry.category    =  req.body.category;
+        }
+        console.log(brandDbEntry, 'brandDbEntry');
+
         const existBrand     =  await Brande.findOne({'name': brandDbEntry.name});
         if(!existBrand) {
+            brandsTitles.push(brandDbEntry);
             const createBrand  = await Brande.create(brandDbEntry);
             const foundUser    = await User.findById(req.userId);
             foundUser.brands.push(createBrand);

@@ -4,7 +4,7 @@ const User      =   require('../models/user');
 const bcrypt    =   require('bcryptjs');
 
 // create
-router.post('/create', async (req, res) => {
+router.post('/', async (req, res) => {
     const password         =   req.body.password;
     const hashedPassword   =   bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
@@ -75,7 +75,7 @@ router.put('/:id', async (req, res) => {
         const usernameExists   =   await User.findOne({'username': req.body.username});
         
         if(!usernameExists || (currentUser.username === req.body.username)) {
-            await User.findByIdAndUpdate(req.params.id, req.body);
+            await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
             res.redirect(`/users/${req.params.id}`);
         } else {
             console.log('Username already Exists!');

@@ -16,18 +16,27 @@
                     <%= newBrandMessage %>
             <% } %>
 
-            <form action="/brands" method="POST" id="newBrand-form">
+            <form action="/users/<%= user._id %>/brands" method="POST" id="newBrand-form">
                 Name:      <input type="text" name="name" placeholder="name"><br/>
-                Category:  <input type="text" name="category" placeholder="category"><br/>
-                           <input type="submit"><br/>
+                Category:  <input type="text" name="category" placeholder="category"><br/><br/>
+                         
+         
+
+                <h2>Or Select From List</h2>
+                
+                <select name="brandName">
+                    <option value="Select">Select</option>
+                    <% for(let i = 0; i < brandsTitles.length; i++) { %>
+                        <option value="<%= brandsTitles[i].name %>" ><%= brandsTitles[i].name %></option>
+                    <% } %>
+                    <% for(let i = 0; i < allBrands.length; i++) { %>
+                        <option value="<%= allBrands[i].name %>" ><%= allBrands[i].name %></option>
+                    <% }  %>
+                </select><br/><br/>
+
+                <input type="submit"><br/>
             </form>
-            <h2>Or Select From List</h2>
-            <select>
-                <option value="Select">Select</option>
-                <% for(let i = 0; i < brandsTitles.length; i++) { %>
-                    <option value="<%= brandsTitles[i].name %>" label="<%= brandsTitles[i].category %>"><%= brandsTitles[i].name %></option>
-                <% } %>
-            </select>
+
         </main>
         <footer>
             <% include ../partials/footer %>
