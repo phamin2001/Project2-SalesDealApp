@@ -1,6 +1,6 @@
 const express    =   require('express');
 const router     =   express.Router();
-const Brande     =   require('../models/brand');
+const Brand      =   require('../models/brand');
 const User       =   require('../models/user');
 const Deal       =   require('../models/deal');
 
@@ -31,7 +31,7 @@ const brandsTitles = [
 router.get('/new', async (req, res) => {
     try {
         const foundUser = await User.findById(req.userId);
-        const allBrands = await Brande.find({});
+        const allBrands = await Brand.find({});
 
         res.render('brands/newBrand.ejs', {
             user             :  foundUser,
@@ -48,16 +48,12 @@ router.get('/new', async (req, res) => {
 
 // create
 router.post('/', async(req, res) => {
-    // console.log(req.body.brandName, 'brandName');
-    // check if selected brand OR created brand
-    // has already in the user.Brands array
-
     const brandDbEntry       =  {};
 
     try {
         if(req.body.brandName !== "Select") {
             brandDbEntry.name         = req.body.brandName;
-            const foundBrand          = await Brande.findOne({'name': brandDbEntry.name});
+            const foundBrand          = await Brand.findOne({'name': brandDbEntry.name});
             if(foundBrand) {
                 brandDbEntry.category = foundBrand.category;
             } else {
@@ -70,10 +66,10 @@ router.post('/', async(req, res) => {
         }
         console.log(brandDbEntry, 'brandDbEntry');
 
-        const existBrand     =  await Brande.findOne({'name': brandDbEntry.name});
+        const existBrand     =  await Brand.findOne({'name': brandDbEntry.name});
         if(!existBrand) {
             brandsTitles.push(brandDbEntry);
-            const createBrand  = await Brande.create(brandDbEntry);
+            const createBrand  = await Brand.create(brandDbEntry);
             const foundUser    = await User.findById(req.userId);
             foundUser.brands.push(createBrand);
             await foundUser.save();
@@ -86,6 +82,95 @@ router.post('/', async(req, res) => {
     } catch (err) {
         console.log(err);
         res.send(err);
+    }
+});
+
+// show
+router.get('/:id', async (req, res) => {
+    if(req.session.userId == req.userId) {
+        try {
+            const foundUser    =   await User.findById(req.userId);
+            const foundBrand   =   await Brand.findById(req.params.id);
+            res.render('brands/show.ejs', {
+                user          : foundUser,
+                brand         : foundBrand,
+                userSessionId : req.userId
+            });
+        } catch (err) {
+            console.log(err);
+            res.send(err);    
+        }
+    } else {
+        console.log('You are not a right person!');
+        req.send('You are not a right person!');
+    }
+});
+
+// edit
+router.get('/:id/edit', async (req, res) => {
+    try {
+        const foundUser  = await User.findById(req.userId);
+        const foundBrand = await Brand.findById(req.params.id);
+
+        res.render('brands/edit.ejs', {
+            user           :  foundUser,
+            brand          :  foundBrand,
+            userSessionId  :  req.userId,
+            editMessage    :  req.flash('updateError')
+        });
+        
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+});
+
+// update
+router.put('/:id', async (req, res) => {
+    try {
+        const currentUser       =   await User.findById(req.userId);
+        const currentBrand      =   await Brand.findById(req.params.id);
+        const brandNameExists   =   await Brand.findOne({'name': req.body.naem});
+
+
+        if(!brandNameExists || (currentBrand.name === brandNameExists.name)) {
+                const updatedBrand   =   await Brand.findByIdAndUpdate(req.params.id, req.body, {new: true});
+                currentUser.brands.forEach((brand) => {
+                    if(brand._id == req.params.id) {
+                        brand.remove();
+                    }
+                });
+                currentUser.brands.push(updatedBrand);
+                await currentUser.save();
+                res.redirect(`/users/${req.userId}/${req.params.id}`);
+        } else {
+            console.log('Brand Name already exists!');
+            req.flash('updateError', 'Brand Name alreadyt Exists!');
+            res.redirect(`/users/${req.userId}/brands/${req.params.id}/edit`);
+        }
+    } catch (err) {
+        console.log('err');
+        res.send(err);        
+    }
+});
+
+// delete
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedBrand = await Brand.findByIdAndDelete(req.params.id);
+        const foundUser  =  await User.findById(req.userId);
+
+        foundUser.brands.forEach((brand) => {
+            if(brand._id == req.params.id) {
+                brand.remove();
+            }
+        });
+        await foundUser.save();
+        console.log(req.userId, 'userId')
+        res.redirect(`/users/${req.userId}`); 
+    } catch (err) {
+        console.log(err);
+        res.send(err)        
     }
 });
 

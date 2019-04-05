@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include ../partials/headmeta %>
+        <title><%= brand.name %></title>
+    </head>
+    <body>
+        <header>
+            <% include ../partials/header %>
+        </header>
+        <main>
+            <h1>Name: <%= brand.name %></h1>
+            <h2>Category: <%= brand.category %></h2>
+
+            <div>
+                <% if(user._id.toString() === userSessionId.toString()) { %>
+                    <h3><a href="/users/<%= user._id %>/brands/<%= brand._id %>/edit"><button>Edit Brand</button></a></h3>
+                    <h3><form action="/users/<%= user._id %>/brands/<%= brand._id %>?_method=DELETE" method="POST"><button>Delete Brand</button></form></h3>
+                <% } %>
+           </div>
+        </main>
+        <footer>
+            <% include ../partials/footer%>
+        </footer>
+    </body>
+</html>

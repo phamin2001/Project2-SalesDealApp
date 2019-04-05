@@ -10,10 +10,12 @@
            <% include ../partials/header %>
         </header>
         <main>
+            <h1>Edit Your Profile:</h1>
+            
             <% if(editMessage) { %>
                 <%= editMessage %>
             <% } %>
-            <h1>Edit Your Profile:</h1>
+            
             <form action="/users/<%= user._id %>?_method=put" method="POST" id="editUser-form">
                 Name:        <input type="text" name="name" placeholder="<%= user.name %>"><br/>
                 Last Name:   <input type="text" name="lastname" placeholder="<%= user.lastname %>"><br/>
@@ -25,6 +27,6 @@
         <footer>
             <% include ../partials/footer %>
         </footer>
-        <script src="/js/editValidation.js"></script>
+        <script src="/js/editUserValidation.js"></script>
     </body>
 </html>

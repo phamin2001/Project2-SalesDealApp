@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include ../partials/headmeta %>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <title>Edit Your Brand</title>
+    </head>
+    <body>
+        <header>
+           <% incldue ../partials/header %>
+        </header>
+        <main>
+            <h1>Edit <%= brand.name %> </h1>
+
+            <% if(editMessage) { %>
+                    <%= editMessage %>
+            <% } %>
+          
+            <form action="/users/<%= user._id %>/brands/<%= brand._id %>?_method=put" method="POST" id="editBrand-form">
+                Name:     <input type="text" name="name" placeholder="<%= brand.name %>"><br/>
+                Category: <input type="text" name="category" placeholder="<%= brand.category %>"><br/>
+                          <input type="submit">
+            </form>
+        </main>
+        <footer>
+            <% include  ../partials/footer %>
+        </footer>
+        <script src="/js/editBrandValidation.js"></script>
+    </body>
+</html>
