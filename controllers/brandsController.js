@@ -77,7 +77,7 @@ router.post('/', async(req, res) => {
         } else {
             console.log('This brand already exists. Create another one or Choose from and options');
             req.flash('newBrandMessage', 'Brand Alredy Exist, Try Again');
-            res.redirect('/brands/new');
+            res.redirect(`/users/${req.userId}/brands/new`);
         }
     } catch (err) {
         console.log(err);
@@ -142,7 +142,7 @@ router.put('/:id', async (req, res) => {
                 });
                 currentUser.brands.push(updatedBrand);
                 await currentUser.save();
-                res.redirect(`/users/${req.userId}/${req.params.id}`);
+                res.redirect(`/users/${req.userId}/brands/${req.params.id}`);
         } else {
             console.log('Brand Name already exists!');
             req.flash('updateError', 'Brand Name alreadyt Exists!');

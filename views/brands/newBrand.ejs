@@ -10,12 +10,13 @@
             <% include ../partials/header.ejs %>
         </header>
         <main>
-            <h1>Add Brands To Your Profile</h1>
+            <h1>Add Brands To Your Profile</h1><br/>
 
             <% if(newBrandMessage) { %>
                     <%= newBrandMessage %>
             <% } %>
 
+            <br/>
             <form action="/users/<%= user._id %>/brands" method="POST" id="newBrand-form">
                 Name:      <input type="text" name="name" placeholder="name"><br/>
                 Category:  <input type="text" name="category" placeholder="category"><br/><br/>
