@@ -33,6 +33,12 @@ router.get('/new', async (req, res) => {
         const foundUser = await User.findById(req.userId);
         const allBrands = await Brand.find({});
 
+        // const filterUserBrands = allBrands.filter((brand) => {
+        //     return (
+
+        //     );
+        // });
+
         res.render('brands/newBrand.ejs', {
             user             :  foundUser,
             allBrands        :  allBrands,
@@ -49,6 +55,7 @@ router.get('/new', async (req, res) => {
 // create
 router.post('/', async(req, res) => {
     const brandDbEntry       =  {};
+    var flag                 = false;
 
     try {
         if(req.body.brandName !== "Select") {
@@ -63,21 +70,43 @@ router.post('/', async(req, res) => {
         } else {
             brandDbEntry.name        =  req.body.name;
             brandDbEntry.category    =  req.body.category;
+
+            brandsTitles.forEach((brand) => {
+                if(brand.name === brandDbEntry.name && brand.category === brandDbEntry.category) {
+                    flag = true;  
+                }
+            });
         }
-        console.log(brandDbEntry, 'brandDbEntry');
 
         const existBrand     =  await Brand.findOne({'name': brandDbEntry.name});
-        if(!existBrand) {
-            brandsTitles.push(brandDbEntry);
-            const createBrand  = await Brand.create(brandDbEntry);
-            const foundUser    = await User.findById(req.userId);
-            foundUser.brands.push(createBrand);
-            await foundUser.save();
-            res.redirect(`/users/${req.userId}`);
-        } else {
-            console.log('This brand already exists. Create another one or Choose from and options');
-            req.flash('newBrandMessage', 'Brand Alredy Exist, Try Again');
+        
+        if(flag) {
+            console.log("This brand is already in the List. Check it!");
+            req.flash('newBrandMessage', 'Chek the list.');
             res.redirect(`/users/${req.userId}/brands/new`);
+        } else {
+            if(!existBrand) {
+                // brandsTitles.push(brandDbEntry);
+                const createBrand  = await Brand.create(brandDbEntry);
+                const foundUser    = await User.findById(req.userId);
+                foundUser.brands.push(createBrand);
+                await foundUser.save();
+                res.redirect(`/users/${req.userId}`);
+            } else {
+                const existBrandByCategory = await Brand.findOne({'category': brandDbEntry.category});
+                
+                if(!existBrandByCategory) {
+                    const createBrand  = await Brand.create(brandDbEntry);
+                    const foundUser    = await User.findById(req.userId);
+                    foundUser.brands.push(createBrand);
+                    await foundUser.save();
+                    res.redirect(`/users/${req.userId}`);
+                } else {
+                    console.log('This brand already exists. Create another one or Choose from and options');
+                    req.flash('newBrandMessage', 'Brand Alredy Exist, Try Again');
+                    res.redirect(`/users/${req.userId}/brands/new`);
+                }
+            }
         }
     } catch (err) {
         console.log(err);

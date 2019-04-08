@@ -5,7 +5,10 @@ $('#newbrand-form').submit((e) => {
 
     $(formInputs).each((index, inputData) => {
         inputsData[inputData.name] = inputData.value;
+        console.log(inputData,'inputdata');
     })
+
+    console.log(inputsData, 'inputsData');
 
     let errors = {};
 

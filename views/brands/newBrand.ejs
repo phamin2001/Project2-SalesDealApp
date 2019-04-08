@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <% include ../partials/headmeta%>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <% include ../partials/headmeta%>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <title>New Brand</title>
     </head>
     <body>
@@ -30,10 +30,10 @@
                 <select name="brandName">
                     <option value="Select">Select</option>
                     <% for(let i = 0; i < brandsTitles.length; i++) { %>
-                        <option value="<%= brandsTitles[i].name %>" ><%= brandsTitles[i].name %></option>
+                        <option value="<%= brandsTitles[i].name %>" ><%= brandsTitles[i].name %>, <%= brandsTitles[i].category %></option>
                     <% } %>
                     <% for(let i = 0; i < allBrands.length; i++) { %>
-                        <option value="<%= allBrands[i].name %>" ><%= allBrands[i].name %></option>
+                        <option value="<%= allBrands[i].name %>" ><%= allBrands[i].name %>, <%= allBrands[i].category %></option>
                     <% }  %>
                 </select><br/><br/>
 
