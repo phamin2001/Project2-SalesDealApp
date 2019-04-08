@@ -1,6 +1,5 @@
 const express   =   require('express');
 const router    =   express.Router();
-const percent      =   require('../models/percent');
 const Brand     =   require('../models/brand');
 
 const brandsTitles = [

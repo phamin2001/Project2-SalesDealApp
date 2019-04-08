@@ -1,14 +1,11 @@
 $('#createUser-form').submit((e) => {
     e.preventDefault();
     const formInputs  =  $('#createUser-form').serializeArray();
-    const inputsData      =  {};
+    const inputsData  =  {};
 
     $(formInputs).each((index, inputData) => {
         inputsData[inputData.name] = inputData.value;
-        // console.log(inputData, 'inputData');
     })
-
-    // console.log(inputsData, 'inputsData');
     
     let errors = {};
 
@@ -37,12 +34,13 @@ $('#createUser-form').submit((e) => {
     }
 
     if(JSON.stringify(errors) === "{}"){
-        console.log('everything is fine')
+        console.log("Everything is fine")
         $(e.currentTarget).off('submit');
         $(e.currentTarget).submit();
     } else {
         $('.createError').empty();
-        $('.createError').append((errors.username ? errors.username + '<br>' : '') , (errors.password ? errors.password + '<br>' : ''));
-        console.log(err);
+        $('.createError').append((errors.username ? errors.username + '<br>' : '') , 
+                                 (errors.password ? errors.password + '<br>' : ''));
+        console.log(errors);
     }
 })
