@@ -57,6 +57,8 @@ router.post('/', async(req, res) => {
     const brandDbEntry       =  {};
     var flag                 = false;
 
+    console.log(req.body, 'body');
+
     try {
         if(req.body.brandName !== "Select") {
             brandDbEntry.name         = req.body.brandName;

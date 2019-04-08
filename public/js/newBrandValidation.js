@@ -1,14 +1,11 @@
-$('#newbrand-form').submit((e) => {
-    e.preventDefaulit();
+$('#newBrand-form').submit((e) => {
+    e.preventDefault();
     const formInputs = $('#newBrand-form').serializeArray();
     const inputsData = {};
 
     $(formInputs).each((index, inputData) => {
         inputsData[inputData.name] = inputData.value;
-        console.log(inputData,'inputdata');
     })
-
-    console.log(inputsData, 'inputsData');
 
     let errors = {};
 
@@ -32,7 +29,7 @@ $('#newbrand-form').submit((e) => {
     }
 
     // validate Category
-    if(!inputsData.category.match(/[A-Za-z0-9]/g)) {
+    if(inputsData.category.length > 1 && !inputsData.category.match(/[A-Za-z0-9]/g)) {
         errors.category = "Category is not valid"
     }
 
