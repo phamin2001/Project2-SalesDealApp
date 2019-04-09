@@ -14,7 +14,7 @@
             <nav id="user-brands">
                 <ul>
                     <% for(let i = 0; i < user.brands.length; i++) { %>
-                        <li><a href="/users/<%= user._id %>/brands/<%= user.brands[i]._id %>"><%= user.brands[i].name %></a></li>
+                        <li><a href="/users/<%= user._id %>/brands/<%= user.brands[i]._id %>"><%= user.brands[i].name %>, <%= user.brands[i].category %></a></li><br/>
                     <% } %><br/>
                 </ul>
                 <div>

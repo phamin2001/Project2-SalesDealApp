@@ -12,6 +12,8 @@
         <main>
             <h1>Edit <%= brand.name %> </h1>
 
+            <div class="createError"></div>
+
             <% if(editMessage) { %>
                     <%= editMessage %>
             <% } %>
@@ -19,7 +21,7 @@
             <form action="/users/<%= user._id %>/brands/<%= brand._id %>?_method=put" method="POST" id="editBrand-form">
                 Name:     <input type="text" name="name" placeholder="<%= brand.name %>"><br/>
                 Category: <input type="text" name="category" placeholder="<%= brand.category %>"><br/><br/>
-                          <input type="Submit">
+                          <input type="submit">
             </form>
         </main>
         <footer>
