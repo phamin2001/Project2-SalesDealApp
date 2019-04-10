@@ -4,14 +4,17 @@ $('#newBrand-form').submit((e) => {
     const formInputs = $('#newBrand-form').serializeArray();
     const inputsData = {};
 
+    console.log(formInputs, 'formsInput');
 
     $(formInputs).each((index, inputData) => {
         inputsData[inputData.name] = inputData.value;
     })
 
+    console.log(inputsData, 'inputsData');
+
     let errors = {};
 
-    if(!inputsData.brandName) {
+    if(inputsData.brandName === "Select") {
         
         // validate Name
         if(inputsData.name.length < 1) {
@@ -33,8 +36,22 @@ $('#newBrand-form').submit((e) => {
         }
 
         // validate Category
+        if(inputsData.category.length < 1) {
+            if(!errors.category) {
+                errors.category = [];
+                errors.category.push("Category is required");
+            } else {
+                errors.category.push("Category is required.");
+            }
+        }
+
         if(inputsData.category.length > 1 && !inputsData.category.match(/[A-Za-z0-9]/g)) {
-            errors.category = "Category is not valid"
+            if(!errors.category) {
+                errors.category = [];
+                errors.category.push("Category is not valid");
+            } else {
+                errors.category.push("Category is not valid.");
+            }
         }
 
         if(JSON.stringify(errors) === "{}") {
@@ -43,11 +60,11 @@ $('#newBrand-form').submit((e) => {
             $(e.currentTarget).submit();
         } else {
             $('.createError').empty();
-            $('.createError').append((errors.name     ? errors.name     + '<br>' : ''), 
-                                    (errors.category ? errors.category + '<br>' : '' ));
+            $('.createError').append((errors.name     ?  errors.name     + '<br>' : ''), 
+                                     (errors.category ?  errors.category + '<br>' : '' ));
             console.log(errors);
         }
-    } else {
+    }  else {
         console.log("Everything is fine");
         $(e.currentTarget).off('submit');
         $(e.currentTarget).submit();

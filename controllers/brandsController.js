@@ -155,9 +155,9 @@ router.get('/:id/edit', async (req, res) => {
 // update
 router.put('/:id', async (req, res) => {
     try {
-        const currentUser       =   await User.findById(req.userId);
-        const currentBrand      =   await Brand.findById(req.params.id);
-        const editBrandName     =   await Brand.findOne({'name': req.body.name});
+        const currentUser           =   await User.findById(req.userId);
+        const currentUserBrand      =   await Brand.findById(req.params.id);
+        const editedUserBrand       =   await Brand.findOne({'name': req.body.name});
 
         // (currentBrand.name === editBrandName.name)
 
