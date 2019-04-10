@@ -33,6 +33,49 @@ router.get('/new', async (req, res) => {
         const foundUser = await User.findById(req.userId);
         const allBrands = await Brand.find({});
 
+        const filterAllBrands = allBrands.filter((brand) => {
+            // console.log(brand, 'brand');
+            const currentBrand    = {};
+            currentBrand.name     = brand.name;
+            currentBrand.category = brand.category;
+            // console.log(currentBrand, 'currentBrand');
+            
+            // return !brandsTitles.includes(currentBrand); 
+            // currentBrand.filter(filterBrand => brandsTitles.filter())
+          
+            //     let filterbrandarray = brandsTitles.filter((filterBrand) => {
+            //             return (filterBrand.name !== brand.name || 
+            //                     (filterBrand.name === brand.name && filterBrand.category !== brand.category))
+            //     })
+            //     console.log(filterbrandarray,'filterbrandarray')
+            // return filterbrandarray;
+
+            // const returnBrand = null;
+            // if (brandsTitles.includes(currentBrand)) {
+            //     returnBrand = null;
+            // } else {
+            //     returnBrand = currentBrand;
+            // }
+             
+            // return returnBrand
+            return (
+                !brandsTitles.includes(currentBrand)
+            )
+         
+        });
+
+        console.log(filterAllBrands, 'filterallbrands')
+
+        var array1 = [{name: 'a'}, {name: 'b'}, {name: 'c'}];
+        var array2 = [{name: 'b'}];
+
+        array1 = array1.filter(function(item) {
+            // console.log(String(item), 'item');
+            return !array2.includes(item); 
+        })
+        console.log(array1);
+
+
         // const filterUserBrands = allBrands.filter((brand) => {
         //     return (
 
@@ -41,10 +84,10 @@ router.get('/new', async (req, res) => {
 
         res.render('brands/newBrand.ejs', {
             user             :  foundUser,
-            allBrands        :  allBrands,
+            allBrands        :  filterAllBrands,
             brandsTitles     :  brandsTitles,
-            sessionId        : req.session.userId,
-            newBrandMessage  : req.flash('newBrandMessage')
+            sessionId        :  req.session.userId,
+            newBrandMessage  :  req.flash('newBrandMessage')
         });
     } catch (err) {
         console.log(err);
@@ -63,7 +106,7 @@ router.post('/', async(req, res) => {
 
         // user select from list which is brandsTitle + allBrands in DB
         if(req.body.brandName !== "Select") {
-            const stringArray       =  req.body.brandName.split(',');
+            const stringArray       =   req.body.brandName.split(',');
             brandDbEntry.name       =   stringArray[0];
             brandDbEntry.category   =   stringArray[1];
         } else {
@@ -174,7 +217,7 @@ router.put('/:id', async (req, res) => {
             );
         });
 
-        // editedBrand is not existed in Brand DB 
+        // editedBrand is not existed in Brand DB or is not in brandsTitles
         // updated the current one in BrandDB and
         // also replace it with the current brand in userBrands
         if(findEditedBrand.length === 0 && findEditedBrandInBrandTitles.length === 0) { 

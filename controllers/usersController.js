@@ -70,12 +70,21 @@ router.get('/:id/edit', async (req, res) => {
 
 // update:
 router.put('/:id', async (req, res) => {
+    const password         =   req.body.password;
+    const hashedPassword   =   bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+
+    const editedUserDbEntry      =   {};
+    editedUserDbEntry.name       =   req.body.name;
+    editedUserDbEntry.lastname   =   req.body.lastname;
+    editedUserDbEntry.username   =   req.body.username;
+    editedUserDbEntry.password   =   hashedPassword;
+
     try {
         const currentUser      =   await User.findById(req.params.id);
         const usernameExists   =   await User.findOne({'username': req.body.username});
         
         if(!usernameExists || (currentUser.username === req.body.username)) {
-            await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
+            await User.findByIdAndUpdate(req.params.id, editedUserDbEntry, {new: true});
             res.redirect(`/users/${req.params.id}`);
         } else {
             console.log('Username already Exists!');

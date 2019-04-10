@@ -17,12 +17,14 @@
             <% } %>
             
             <form action="/users/<%= user._id %>?_method=put" method="POST" id="editUser-form">
-                Name:        <input type="text" name="name" placeholder="<%= user.name %>"><br/>
+                Name*:        <input type="text" name="name" placeholder="<%= user.name %>"><br/>
                 Last Name:   <input type="text" name="lastname" placeholder="<%= user.lastname %>"><br/>
-                Username:    <input type="text" name="username" placeholder="<%= user.username %>"><br/>
-               
+                Username*:    <input type="text" name="username" placeholder="<%= user.username %>"><br/>
+                Password*:    <input type="password" name="password" placeholder="password"><br/><br/>
                              <input type="Submit">
             </form>
+            
+            <h3>* fields is require</h3>
         </main>
         <footer>
             <% include ../partials/footer %>

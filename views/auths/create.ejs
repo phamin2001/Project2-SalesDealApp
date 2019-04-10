@@ -15,12 +15,14 @@
             <h1>Create Your Profile</h1>
             <div class="createError"></div>
             <form action="/users" method="POST" id="createUser-form">
-                Name:      <input type="text" name="name" placeholder="name"><br/>
+                Name*:      <input type="text" name="name" placeholder="name"><br/>
                 Last Name: <input type="text" name="lastname" placeholder="lastname"><br/>
-                Username:  <input type="text" name="username" placeholder="username"><br/>
-                Password:  <input type="password" name="password" placeholder="password"><br/><br/>
+                Username*:  <input type="text" name="username" placeholder="username"><br/>
+                Password*:  <input type="password" name="password" placeholder="password"><br/><br/>
                            <input type="submit"> 
             </form> <br/>
+
+            <h3>* fields is required</h3>
             <nav id="back-home"><br/>
                 <a href="/"><button>Back To Main Page</button></a>
             </nav>
