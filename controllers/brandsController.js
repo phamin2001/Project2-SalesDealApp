@@ -63,7 +63,7 @@ router.post('/', async(req, res) => {
 
         // user select from list which is brandsTitle + allBrands in DB
         if(req.body.brandName !== "Select") {
-            const stringArray  =  req.body.brandName.split(',');
+            const stringArray       =  req.body.brandName.split(',');
             brandDbEntry.name       =   stringArray[0];
             brandDbEntry.category   =   stringArray[1];
         } else {
@@ -154,32 +154,58 @@ router.get('/:id/edit', async (req, res) => {
 
 // update
 router.put('/:id', async (req, res) => {
+    const brandDbentry     = {}; 
+    brandDbentry.name      = req.body.name;
+    brandDbentry.category  = req.body.category;
+
     try {
         const currentUser           =   await User.findById(req.userId);
-        const currentUserBrand      =   await Brand.findById(req.params.id);
-        const editedUserBrand       =   await Brand.findOne({'name': req.body.name});
+        const allBrands             =   await Brand.find({});
+        const findEditedBrand       =   allBrands.filter((brand) => {
+            return(
+                brand.name         ==   brandDbentry.name &&
+                brand.category     ==   brandDbentry.category
+            );
+        });
+        const findEditedBrandInBrandTitles = brandsTitles.filter((brand) => {
+            return(
+                brand.name         ==   brandDbentry.name &&
+                brand.category     ==   brandDbentry.category
+            );
+        });
 
-        // (currentBrand.name === editBrandName.name)
-
-        if(!editBrandName) {
-                const updatedBrand   =   await Brand.findByIdAndUpdate(req.params.id, req.body, {new: true});
-                currentUser.brands.forEach((brand) => {
-                    if(brand._id == req.params.id) {
-                        brand.remove();
-                    }
-                });
-                currentUser.brands.push(updatedBrand);
-                await currentUser.save();
-                res.redirect(`/users/${req.userId}/brands/${req.params.id}`);            
+        // editedBrand is not existed in Brand DB 
+        // updated the current one in BrandDB and
+        // also replace it with the current brand in userBrands
+        if(findEditedBrand.length === 0 && findEditedBrandInBrandTitles.length === 0) { 
+            const newBrand         = await Brand.create(brandDbentry);
+            currentUser.brands.id(req.params.id).remove();
+            currentUser.brands.push(newBrand);
+            await currentUser.save();
+            res.redirect(`/users/${req.userId}/brands/${newBrand._id}`);  
         } else {
-            if ((currentBrand.name === editBrandName.name)) {
-                    // check user brand category
-            } else {
-                console.log('Brand Name or this Brand name with same category already exists!');
-                req.flash('updateError', 'Brand Name or its category alreadyt Exists!');
+            let repeatFlag = false;
+            currentUser.brands.forEach((brand) => {
+                if(brand.name === brandDbentry.name && brand.category === brandDbentry.category) {
+                    repeatFlag = true;
+                }
+            });
+
+            if(repeatFlag) {
+                console.log("User alread has this brand and category");
+                req.flash('updateError', 'User alread has this brand and category');
                 res.redirect(`/users/${req.userId}/brands/${req.params.id}/edit`);
+            } else {
+                currentUser.brands.id(req.params.id).remove();
+                if(findEditedBrand.length > 1) {
+                    currentUser.brands.push(findEditedBrand[0]);
+                } else {
+                    currentUser.brands.push(findEditedBrandInBrandTitles[0]);
+                }
+                await currentUser.save();
+                res.redirect(`/users/${req.userId}/brands/${findEditedBrand[0]._id}` );  
             }
-        }
+        }        
     } catch (err) {
         console.log('err');
         res.send(err);        
@@ -189,16 +215,10 @@ router.put('/:id', async (req, res) => {
 // delete
 router.delete('/:id', async (req, res) => {
     try {
-        const deletedBrand = await Brand.findByIdAndDelete(req.params.id);
-        const foundUser  =  await User.findById(req.userId);
-
-        foundUser.brands.forEach((brand) => {
-            if(brand._id == req.params.id) {
-                brand.remove();
-            }
-        });
+        // const deletedBrand  =  await Brand.findByIdAndDelete(req.params.id);
+        const foundUser     =  await User.findById(req.userId);
+        foundUser.brands.id(req.params.id).remove();
         await foundUser.save();
-        console.log(req.userId, 'userId')
         res.redirect(`/users/${req.userId}`); 
     } catch (err) {
         console.log(err);
