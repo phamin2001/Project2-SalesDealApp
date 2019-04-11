@@ -4,13 +4,9 @@ $('#newBrand-form').submit((e) => {
     const formInputs = $('#newBrand-form').serializeArray();
     const inputsData = {};
 
-    console.log(formInputs, 'formsInput');
-
     $(formInputs).each((index, inputData) => {
         inputsData[inputData.name] = inputData.value;
     })
-
-    console.log(inputsData, 'inputsData');
 
     let errors = {};
 

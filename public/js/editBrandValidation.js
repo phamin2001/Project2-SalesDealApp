@@ -4,8 +4,6 @@ $('#editBrand-from').submit((e) => {
     const formInputs = $('#editBrand-form').serializeArray();
     const inputsData = {}
 
-    console.log(formInputs, 'formInput');
-
     $(formInputs).each((index, inputData) => {
         inputsData[inputData.name] = inputData.value;
     })
@@ -32,8 +30,22 @@ $('#editBrand-from').submit((e) => {
     }
 
     // validate Category
+    if(inputsData.category.length < 1) {
+        if(!errors.category) {
+            errors.category = [];
+            errors.category.push("Category is required");
+        } else {
+            errors.category.push("Category is required.");
+        }
+    }
+
     if(inputsData.category.length > 1 && !inputsData.category.match(/[A-Za-z0-9]/g)) {
-        errors.category = "Category is not valid"
+         if(!errors.category) {
+                errors.category = [];
+                errors.category.push("Category is not valid");
+        } else {
+                errors.category.push("Category is not valid.");
+        }
     }
 
     if(JSON.stringify(errors) === "{}") {
@@ -41,9 +53,9 @@ $('#editBrand-from').submit((e) => {
         $(e.currentTarget).off('submit');
         $(e.currentTarget).submit();
     } else {
-        $('.createError').empty();
-        $('.createError').append((errors.name     ? errors.name     + '<br>' : ''), 
-                                 (errors.category ? errors.category + '<br>' : '' ));
+        $('.editError').empty();
+        $('.editError').append((errors.name     ? errors.name     + '<br>' : ''), 
+                               (errors.category ? errors.category + '<br>' : '' ));
         console.log(errors);
     }
 })
