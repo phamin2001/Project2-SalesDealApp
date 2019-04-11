@@ -22,7 +22,7 @@ User:
 Brands:
 ```
     name:      {type: String, required: true},
-    category:  {type: String}
+    category:  {type: String, required: true}
 ```
 
 Deal:
