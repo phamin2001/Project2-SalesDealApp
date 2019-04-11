@@ -30,61 +30,12 @@ const brandsTitles = [
 // new
 router.get('/new', async (req, res) => {
     try {
-        const foundUser = await User.findById(req.userId);
-        const allBrands = await Brand.find({});
-
-        const filterAllBrands = allBrands.filter((brand) => {
-            // console.log(brand, 'brand');
-            const currentBrand    = {};
-            currentBrand.name     = brand.name;
-            currentBrand.category = brand.category;
-            // console.log(currentBrand, 'currentBrand');
-            
-            // return !brandsTitles.includes(currentBrand); 
-            // currentBrand.filter(filterBrand => brandsTitles.filter())
-          
-            //     let filterbrandarray = brandsTitles.filter((filterBrand) => {
-            //             return (filterBrand.name !== brand.name || 
-            //                     (filterBrand.name === brand.name && filterBrand.category !== brand.category))
-            //     })
-            //     console.log(filterbrandarray,'filterbrandarray')
-            // return filterbrandarray;
-
-            // const returnBrand = null;
-            // if (brandsTitles.includes(currentBrand)) {
-            //     returnBrand = null;
-            // } else {
-            //     returnBrand = currentBrand;
-            // }
-             
-            // return returnBrand
-            return (
-                !brandsTitles.includes(currentBrand)
-            )
-         
-        });
-
-        console.log(filterAllBrands, 'filterallbrands')
-
-        var array1 = [{name: 'a'}, {name: 'b'}, {name: 'c'}];
-        var array2 = [{name: 'b'}];
-
-        array1 = array1.filter(function(item) {
-            // console.log(String(item), 'item');
-            return !array2.includes(item); 
-        })
-        console.log(array1);
-
-
-        // const filterUserBrands = allBrands.filter((brand) => {
-        //     return (
-
-        //     );
-        // });
+        const foundUser       = await User.findById(req.userId);
+        const allBrands       = await Brand.find({});
 
         res.render('brands/newBrand.ejs', {
             user             :  foundUser,
-            allBrands        :  filterAllBrands,
+            allBrands        :  allBrands,
             brandsTitles     :  brandsTitles,
             sessionId        :  req.session.userId,
             newBrandMessage  :  req.flash('newBrandMessage')
