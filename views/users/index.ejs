@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Your Match Deals</title>
+    </head>
+    <body>
+        <header>
+            <% include ../partials/header %>
+        </header>
+        <main>
+            <h1>You Are On Top Of It <%= user.name %></h1>
+
+            <% for(let i = 0; i < userMatchBrands.length; i++) { %>
+                <li><a href="/users/<%= user._id %>/brands/<%= userMatchBrands[i]._id %>">
+                            <%= userMatchBrands[i]
+            <% } %>
+
+
+            
+        </main>
+        <footer>
+            <% include ../partials/footer %>
+        </footer>
+    </body>
+</html>

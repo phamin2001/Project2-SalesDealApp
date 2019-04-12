@@ -5,7 +5,7 @@ const User       =   require('../models/user');
 const Deal       =   require('../models/deal');
 
 const brandsTitles = [
-    {name: 'Nike'     , category: 'sport'     },
+    {name: 'Nike'     , category: 'shoes'     },
     {name: 'Gap'      , category: 'clothes'   },
     {name: 'Starbucks', category: 'coffee'    },
     {name: 'Subway'   , category: 'food'      },
@@ -19,12 +19,12 @@ const brandsTitles = [
     {name: 'Laws'     , category: 'utility'   },
     {name: 'Zara'     , category: 'clothes'   },
     {name: 'Budweiser', category: 'beer'      },
-    {name: 'Canon'    , category: 'Camera'    },
+    {name: 'Canon'    , category: 'camera'    },
     {name: 'Gucci'    , category: 'fashion'   },
     {name: 'Adidas'   , category: 'sport'     },
     {name: 'Lego'     , category: 'game'      },
     {name: 'KFC'      , category: 'food'      },
-    {name: 'Lenovo'   , category: 'computer'  }
+    {name: 'Lenovo'   , category: 'technology'}
 ]
 
 // new

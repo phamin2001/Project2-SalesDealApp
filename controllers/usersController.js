@@ -7,19 +7,28 @@ const bcrypt    =   require('bcryptjs');
 router.get('/', async (req, res) => {
     try {
         const loggedInUser     =   await User.find({'username': req.session.username});
-        // console.log(loggedInUser[0]._id, 'loggeduser')
-        // console.log('here query:', req.query.selectedSales);
-        
-        // filter sales
+
         if(req.query.selectedSales){
+            if(!Array.isArray(req.query.selectedSales)) {
+                req.query.selectedSales = [req.query.selectedSales];
+            }
+            let userBrandsName = loggedInUser[0].brands.map((brand) => brand.name);
             
-            console.log(req.query.selectedSales, 'query')
-            const filterLoggedInUserBrand = loggedInUser.brands.filter((brand) => {
-                return 
+            let filterUserBrands = userBrandsName.filter((brandName) => {
+                return req.query.selectedSales.every((selectedSale) => {
+                    let selectedSaleArray = selectedSale.split(',');
+                    return (
+                        brandName.includes(selectedSaleArray[0])
+                    )
+                })
+            })
+
+            res.render('users/index.ejs', {
+                user            :  loggedInUser,
+                deals           :  req.query.selectedSale,
+                userMatchBrands :  filterUserBrands,
+                sessionId       :  req.session.userId
             });
-
-            
-
         } else {
             console.log("Select Your Favorite Sales");
             req.flash('selectErrorMessage', 'Select Your Favorite Sales');

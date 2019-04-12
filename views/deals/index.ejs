@@ -19,7 +19,7 @@
             <form action="/users/">
                 <div id="sales">
                     <% for(let i = 0; i < sales.length; i++) { %>
-                        <input type="checkbox" name="selectedSales" value="<%= sales[i].name %>,<%= sales[i].category %>">
+                        <input type="checkbox" name="selectedSales" value=<%= sales[i].name %>,<%= sales[i].category %> >
                             <%= sales[i].name %>, <%= sales[i].category %>, <%= sales[i].percent %></br>
                     <% } %>
                 </div><br/>
@@ -27,7 +27,7 @@
             </form>
 
             <% if(showUserBrand) { %>
-                    <h2>Yah! You Have Matches!!</h2>
+                    <h2>Yehhh!! You Have Matches...</h2>
             <% } %>
 
         </main>
