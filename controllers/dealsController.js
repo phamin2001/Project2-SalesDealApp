@@ -1,8 +1,10 @@
 const express   =   require('express');
 const router    =   express.Router();
 const Brand     =   require('../models/brand');
+const Deal      =   require('../models/deal');
+const User      =   require('../models/user');
 
-const brandsTitles = [
+const salesArray = [
     {name: 'Nike'     , percent: '23%' ,  category: 'sport'       },
     {name: 'Gap'      , percent: '5%'  ,  category: 'clothes'     },
     {name: 'Starbucks', percent: '15%' ,  category: 'coffee'      },
@@ -24,5 +26,22 @@ const brandsTitles = [
     {name: 'KFC'      , percent: '20%' ,  category: 'food'        },
     {name: 'Lenovo'   , percent: '12%' ,  category: 'computer'    }
 ]
+
+// index
+router.get('/', async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.userId);
+        res.render('deals/index.ejs', {
+            user          :  currentUser,
+            sales         :  salesArray,
+            sessionId     :  req.session.userId,
+            selectMessage :  req.flash('selectErrorMessage'),
+            showUserBrand :  false
+        });
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+});
 
 module.exports = router;

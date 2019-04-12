@@ -3,6 +3,34 @@ const router    =   express.Router();
 const User      =   require('../models/user');
 const bcrypt    =   require('bcryptjs');
 
+// index (for sales deal)
+router.get('/', async (req, res) => {
+    try {
+        const loggedInUser     =   await User.find({'username': req.session.username});
+        // console.log(loggedInUser[0]._id, 'loggeduser')
+        // console.log('here query:', req.query.selectedSales);
+        
+        // filter sales
+        if(req.query.selectedSales){
+            
+            console.log(req.query.selectedSales, 'query')
+            const filterLoggedInUserBrand = loggedInUser.brands.filter((brand) => {
+                return 
+            });
+
+            
+
+        } else {
+            console.log("Select Your Favorite Sales");
+            req.flash('selectErrorMessage', 'Select Your Favorite Sales');
+            res.redirect(`/users/${loggedInUser[0]._id}/deals/`);
+        }
+    } catch (err) {
+        console.log(err);
+        req.send(err);
+    }
+});
+
 // create
 router.post('/', async (req, res) => {
     const password         =   req.body.password;

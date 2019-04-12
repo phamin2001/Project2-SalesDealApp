@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include ../partials/headmeta %>
+        <title>Deals</title>
+    </head>
+    <body>
+        <header>
+            <% include ../partials/header %>
+        </header>
+        <main>
+            <h1>Check Curent Deals <%= user.name %></h1>
+
+            
+            <% if(selectMessage) { %>
+                <%= selectMessage %>
+            <% } %><br/>
+
+            <form action="/users/">
+                <div id="sales">
+                    <% for(let i = 0; i < sales.length; i++) { %>
+                        <input type="checkbox" name="selectedSales" value="<%= sales[i].name %>,<%= sales[i].category %>">
+                            <%= sales[i].name %>, <%= sales[i].category %>, <%= sales[i].percent %></br>
+                    <% } %>
+                </div><br/>
+                <input type="submit" value="Find Your Match">
+            </form>
+
+            <% if(showUserBrand) { %>
+                    <h2>Yah! You Have Matches!!</h2>
+            <% } %>
+
+        </main>
+        <footer>
+            <% include ../partials/footer %>
+        </footer>
+    </body>
+</html>

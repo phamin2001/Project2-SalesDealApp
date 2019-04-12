@@ -47,6 +47,10 @@ app.use('/users/:id/brands', (req, res, next) => {
     next();
 }, brandsController);
 
+app.use('/users/:id/deals', (req, res, next) => {
+    req.userId = req.params.id;
+    next();
+}, dealsController);
 
 app.get('/', (req, res) => {
     res.render('index.ejs', {
