@@ -12,20 +12,24 @@ router.get('/', async (req, res) => {
             if(!Array.isArray(req.query.selectedSales)) {
                 req.query.selectedSales = [req.query.selectedSales];
             }
-            let userBrandsName = loggedInUser[0].brands.map((brand) => brand.name);
-            
-            let filterUserBrands = userBrandsName.filter((brandName) => {
-                return req.query.selectedSales.every((selectedSale) => {
+
+            let filterUserBrands = loggedInUser[0].brands.filter((brand) => {
+                return req.query.selectedSales.some((selectedSale) => {
                     let selectedSaleArray = selectedSale.split(',');
-                    return (
-                        brandName.includes(selectedSaleArray[0])
-                    )
-                })
-            })
+                    return brand.name.includes(selectedSaleArray[0])
+                });
+            });
+
+            filterUserBrands = filterUserBrands.filter((brand) => {
+                return req.query.selectedSales.some((selectedSale) => {
+                    let selectedSaleArray = selectedSale.split(',');
+                    return brand.category.includes(selectedSaleArray[1]);
+                });
+            });
 
             res.render('users/index.ejs', {
-                user            :  loggedInUser,
-                deals           :  req.query.selectedSale,
+                user            :  loggedInUser[0],
+                deals           :  req.query.selectedSales,
                 userMatchBrands :  filterUserBrands,
                 sessionId       :  req.session.userId
             });

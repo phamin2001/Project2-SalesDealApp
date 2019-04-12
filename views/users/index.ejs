@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <% include ../partials/headmeta %>
         <title>Your Match Deals</title>
     </head>
     <body>
@@ -8,15 +9,24 @@
             <% include ../partials/header %>
         </header>
         <main>
-            <h1>You Are On Top Of It <%= user.name %></h1>
 
-            <% for(let i = 0; i < userMatchBrands.length; i++) { %>
-                <li><a href="/users/<%= user._id %>/brands/<%= userMatchBrands[i]._id %>">
-                            <%= userMatchBrands[i]
+            <h1>You Select these Deals:</h1>
+            <% for(let i = 0; i < deals.length; i++) { %>
+                <ul>
+                    <li><%= deals[i] %></li>
+                </ul>
             <% } %>
 
+            <% if(userMatchBrands.length > 0) { %>
+                    <h1>You Are On Top Of It <%= user.name %>:</h1>
+                    <% for(let i = 0; i < userMatchBrands.length; i++) { %>
+                        <li><a href="/users/<%= user._id %>/brands/<%= userMatchBrands[i]._id %>">
+                            <%= userMatchBrands[i].name %>, <%= userMatchBrands[i].category %></a></li><br/>
+                    <% } %>
+            <% } else { %>
+                    <h1>Sorry, Nothing Match At This Time.Try Again</h1>
+            <% } %>
 
-            
         </main>
         <footer>
             <% include ../partials/footer %>
