@@ -1,4 +1,4 @@
-$('#editBrand-from').submit((e) => {
+$('#editBrand-form').submit((e) => {
     e.preventDefault();
 
     const formInputs = $('#editBrand-form').serializeArray();
